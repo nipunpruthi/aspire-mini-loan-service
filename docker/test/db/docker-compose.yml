@@ -1,0 +1,14 @@
+# Nipun Pruthi
+# Database container for running tests locally.
+version: '2'
+
+services:
+  aspire-mini-loan-service:
+    container_name: aspire-mini-loan-service-db
+    image: postgres:14.10
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: aspire_mini_loan_service
+      POSTGRES_HOST_AUTH_METHOD: trust

@@ -11,11 +11,13 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+    private static final String MESSAGE = "message";
+
     @ExceptionHandler(value = ResourceAccessForbidden.class)
     public ResponseEntity<Object> handleForbidden(Exception e) {
 
         Map<String, Object> body = new HashMap<>();
-        body.put("message", e.getMessage());
+        body.put(MESSAGE, e.getMessage());
         return new ResponseEntity<>(body, HttpStatus.FORBIDDEN);
     }
 
@@ -23,7 +25,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Object> handleNotFound(Exception e) {
 
         Map<String, Object> body = new HashMap<>();
-        body.put("message", e.getMessage());
+        body.put(MESSAGE, e.getMessage());
         return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
     }
 
@@ -31,7 +33,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Object> handleInvalidAction(Exception e) {
 
         Map<String, Object> body = new HashMap<>();
-        body.put("message", e.getMessage());
+        body.put(MESSAGE, e.getMessage());
         return new ResponseEntity<>(body, HttpStatus.NOT_ACCEPTABLE);
     }
 
@@ -39,7 +41,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Object> handleValidationException(Exception e) {
 
         Map<String, Object> body = new HashMap<>();
-        body.put("message", e.getMessage());
+        body.put(MESSAGE, e.getMessage());
         return new ResponseEntity<>(body, HttpStatus.NOT_ACCEPTABLE);
     }
 }

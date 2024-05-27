@@ -10,7 +10,7 @@ import learn.nipun.aspireminiloanservice.loan.dto.LoanApplyDto;
 import learn.nipun.aspireminiloanservice.loan.dto.LoanDto;
 import learn.nipun.aspireminiloanservice.loan.dto.PayInstallmentDto;
 import learn.nipun.aspireminiloanservice.loan.entity.Loan;
-import learn.nipun.aspireminiloanservice.loan.model.Installment;
+import learn.nipun.aspireminiloanservice.loan.entity.Installment;
 import learn.nipun.aspireminiloanservice.loan.model.LoanApply;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;

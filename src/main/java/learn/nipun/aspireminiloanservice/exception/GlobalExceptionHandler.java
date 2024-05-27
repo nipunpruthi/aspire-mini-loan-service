@@ -1,5 +1,6 @@
 package learn.nipun.aspireminiloanservice.exception;
 
+import jakarta.validation.ValidationException;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.http.HttpStatus;
@@ -31,6 +32,14 @@ public class GlobalExceptionHandler {
 
         Map<String, Object> body = new HashMap<>();
         body.put("message", e.getMessage());
-        return new ResponseEntity<>(body, HttpStatus.METHOD_NOT_ALLOWED);
+        return new ResponseEntity<>(body, HttpStatus.NOT_ACCEPTABLE);
+    }
+
+    @ExceptionHandler(value = ValidationException.class)
+    public ResponseEntity<Object> handleValidationException(Exception e) {
+
+        Map<String, Object> body = new HashMap<>();
+        body.put("message", e.getMessage());
+        return new ResponseEntity<>(body, HttpStatus.NOT_ACCEPTABLE);
     }
 }

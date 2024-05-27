@@ -1,6 +1,5 @@
 package learn.nipun.aspireminiloanservice.loan.model;
 
-import java.util.UUID;
 import lombok.Builder;
 import lombok.Getter;
 

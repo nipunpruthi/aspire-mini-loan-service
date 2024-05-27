@@ -7,10 +7,8 @@ import java.util.UUID;
 import learn.nipun.aspireminiloanservice.loan.LoanService;
 import learn.nipun.aspireminiloanservice.loan.dto.LoanApprovalRequestDto;
 import learn.nipun.aspireminiloanservice.loan.entity.Loan;
-import learn.nipun.aspireminiloanservice.loan.model.Installment;
+import learn.nipun.aspireminiloanservice.loan.entity.Installment;
 import learn.nipun.aspireminiloanservice.loan.model.LoanApprovalRequest;
-import learn.nipun.aspireminiloanservice.loan.model.LoanFilter;
-import learn.nipun.aspireminiloanservice.loan.model.LoanStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -30,15 +28,9 @@ public class AdminLoanController {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping(path = LOAN_PATH)
-    public ResponseEntity<List<Loan>> getLoans(@RequestParam(required = false) LoanStatus status) {
+    public ResponseEntity<List<Loan>> getLoans() {
 
-        LoanFilter loanFilter = LoanFilter.builder()
-                .status(status)
-                .userName(null)
-                .loanId(null)
-                .build();
-
-        return new ResponseEntity<>(loanService.getAllLoans(loanFilter), HttpStatus.OK);
+        return new ResponseEntity<>(loanService.getAllLoans(), HttpStatus.OK);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -48,14 +40,13 @@ public class AdminLoanController {
 
         String adminName = getUserName(headers);
         LoanApprovalRequest request = toLoanApprovalRequest(requestDto, adminName);
-
         return new ResponseEntity<>(loanService.loanApproval(request), HttpStatus.OK);
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     @GetMapping(path = LOAN_PATH + "/plans")
     public ResponseEntity<List<Installment>> getAllInstallments(@RequestHeader HttpHeaders headers,
-            @RequestParam UUID loanId) {
+            @RequestParam("loan_id") UUID loanId) {
 
         return new ResponseEntity<>(loanService.getAllInstallments(loanId), HttpStatus.OK);
     }

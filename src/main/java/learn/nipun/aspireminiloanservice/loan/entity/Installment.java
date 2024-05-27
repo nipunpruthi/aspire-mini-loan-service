@@ -1,8 +1,9 @@
-package learn.nipun.aspireminiloanservice.loan.model;
+package learn.nipun.aspireminiloanservice.loan.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.UUID;
+import learn.nipun.aspireminiloanservice.loan.model.PaymentStatus;
 import lombok.*;
 
 @Getter
@@ -14,7 +15,6 @@ import lombok.*;
 @Table(name = "installment")
 public class Installment {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @Column(name = "loan_id", nullable = false)

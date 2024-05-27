@@ -44,6 +44,5 @@ public class SecurityConfig {
     public static PasswordEncoder passwordEncoder() {
 
         return new BCryptPasswordEncoder();
-//        return NoOpPasswordEncoder.getInstance();
     }
 }

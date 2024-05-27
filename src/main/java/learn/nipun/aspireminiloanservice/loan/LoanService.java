@@ -4,8 +4,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import learn.nipun.aspireminiloanservice.exception.ResourceNotFoundException;
 import learn.nipun.aspireminiloanservice.loan.dto.PayInstallmentDto;
+import learn.nipun.aspireminiloanservice.loan.entity.Installment;
 import learn.nipun.aspireminiloanservice.loan.entity.Loan;
 import learn.nipun.aspireminiloanservice.loan.model.*;
 import learn.nipun.aspireminiloanservice.loan.repository.InstallmentRepository;
@@ -35,7 +35,7 @@ public class LoanService {
         return loanRepository.findAllByCustomerId(customerUserId);
     }
 
-    public List<Loan> getAllLoans(final LoanFilter loanFilter) {
+    public List<Loan> getAllLoans() {
 
         return loanRepository.findAll();
     }
@@ -60,12 +60,11 @@ public class LoanService {
     }
 
 
+    @Transactional
     public Loan loanApproval(LoanApprovalRequest loanApprovalRequest) {
 
+        loanValidator.validateLoan(loanApprovalRequest.getLoanId());
         Optional<Loan> optionalLoan = loanRepository.findById(loanApprovalRequest.getLoanId());
-        if (optionalLoan.isEmpty()) {
-            throw new ResourceNotFoundException("Loan with id " + loanApprovalRequest.getLoanId() + " not found");
-        }
         Loan loan = optionalLoan.get();
 
         loanValidator.validateLoanStatus(loan.getId(), LoanStatus.PENDING);
@@ -119,21 +118,9 @@ public class LoanService {
             return installment;
         }
 
-        Double nextAmount = Math.min(pendingAmount, loan.getInstallmentAmount());
+//        Double nextAmount = Math.min(pendingAmount, loan.getInstallmentAmount());
 
         Installment nextInstallment = createNextScheduledPayment(loan, installment.getScheduledPaymentDate());
-
-        // createNextInstallment
-//        Installment nextInstallment = Installment.builder()
-//                .id(UUID.randomUUID())
-//                .pendingAmount(nextAmount)
-//                .termNo(installment.getTermNo() + 1)
-//                .scheduledPaymentDate(installment.getScheduledPaymentDate().plusDays(7))
-//                .loanId(installment.getLoanId())
-//                .receivedAmount(null)
-//                .actualPaymentDate(null)
-//                .status(PaymentStatus.PENDING)
-//                .build();
 
         installmentRepository.save(nextInstallment);
         return installment;

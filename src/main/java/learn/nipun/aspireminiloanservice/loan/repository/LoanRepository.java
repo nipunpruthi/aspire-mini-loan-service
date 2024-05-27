@@ -11,9 +11,8 @@ public interface LoanRepository extends JpaRepository<Loan, UUID> {
     Optional<Loan> findById(UUID loanId);
 
     Loan save(Loan loan);
-    List<Loan> findAll();
 
-//    List<Loan> findAll(LoanFilter loanFilter);
+    List<Loan> findAll();
 
     List<Loan> findAllByCustomerId(String customerId);
 

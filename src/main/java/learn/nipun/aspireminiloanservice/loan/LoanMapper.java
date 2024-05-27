@@ -5,6 +5,7 @@ import java.util.UUID;
 import learn.nipun.aspireminiloanservice.loan.dto.LoanApplyDto;
 import learn.nipun.aspireminiloanservice.loan.dto.LoanApprovalRequestDto;
 import learn.nipun.aspireminiloanservice.loan.dto.LoanDto;
+import learn.nipun.aspireminiloanservice.loan.entity.Installment;
 import learn.nipun.aspireminiloanservice.loan.entity.Loan;
 import learn.nipun.aspireminiloanservice.loan.model.*;
 import lombok.experimental.UtilityClass;

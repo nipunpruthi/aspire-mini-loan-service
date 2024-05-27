@@ -9,7 +9,6 @@ import learn.nipun.aspireminiloanservice.exception.ResourceNotFoundException;
 import learn.nipun.aspireminiloanservice.loan.entity.Loan;
 import learn.nipun.aspireminiloanservice.loan.model.LoanStatus;
 import learn.nipun.aspireminiloanservice.loan.model.PaymentStatus;
-import learn.nipun.aspireminiloanservice.loan.repository.InstallmentRepository;
 import learn.nipun.aspireminiloanservice.loan.repository.LoanRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -19,7 +18,6 @@ import org.springframework.stereotype.Component;
 public class LoanValidator {
 
     private final LoanRepository loanRepository;
-    private final InstallmentRepository installmentRepository;
 
     public void validateLoan(UUID loanId) {
 
@@ -48,7 +46,8 @@ public class LoanValidator {
             throw new ResourceNotFoundException("The loan with id " + loanId + " does not exist");
         }
         if (!loan.get().getStatus().equals(status)) {
-            throw new ResourceAccessForbidden("The loan with id " + loanId + " does not belong to the status " + status);
+            throw new InvalidStatusException(
+                    "The loan with id " + loanId + " does not belong to the status " + status);
         }
     }
 

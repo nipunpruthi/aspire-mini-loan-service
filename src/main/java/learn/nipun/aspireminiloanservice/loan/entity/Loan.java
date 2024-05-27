@@ -15,7 +15,6 @@ import lombok.*;
 @Table(name = "loan")
 public class Loan {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @Column(name = "customer_id", nullable = false)

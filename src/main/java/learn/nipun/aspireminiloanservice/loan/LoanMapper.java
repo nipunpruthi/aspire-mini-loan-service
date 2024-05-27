@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 import learn.nipun.aspireminiloanservice.loan.dto.LoanApplyDto;
 import learn.nipun.aspireminiloanservice.loan.dto.LoanApprovalRequestDto;
+import learn.nipun.aspireminiloanservice.loan.dto.LoanDto;
 import learn.nipun.aspireminiloanservice.loan.entity.Loan;
 import learn.nipun.aspireminiloanservice.loan.model.*;
 import lombok.experimental.UtilityClass;
@@ -18,11 +19,13 @@ public class LoanMapper {
                 .customerId(loanRequest.getUserName())
                 .amount(loanRequest.getAmount())
                 .loanTerm(loanRequest.getLoanTerm())
+                .installmentAmount(loanRequest.getAmount()/loanRequest.getLoanTerm())
                 .pendingAmount(loanRequest.getAmount())
                 .pendingTerms(loanRequest.getLoanTerm())
                 .status(LoanStatus.PENDING)
                 .loanAppliedDate(LocalDate.now())
                 .loanApprovedDate(null)
+                .updatedBy(null)
                 .build();
     }
 
@@ -55,6 +58,21 @@ public class LoanMapper {
                 .adminId(adminId)
                 .loanId(requestDto.getLoanId())
                 .status(LoanStatus.valueOf(requestDto.getDecision().name()))
+                .build();
+    }
+
+    public static LoanDto toLoanDto(Loan loan) {
+        return LoanDto.builder()
+                .id(loan.getId())
+                .customerId(loan.getCustomerId())
+                .amount(loan.getAmount())
+                .loanTerm(loan.getLoanTerm())
+                .installmentAmount(loan.getInstallmentAmount())
+                .pendingAmount(loan.getPendingAmount())
+                .pendingTerms(loan.getPendingTerms())
+                .status(LoanStatus.valueOf(loan.getStatus().name()))
+                .loanAppliedDate(loan.getLoanAppliedDate())
+                .loanApprovedDate(loan.getLoanApprovedDate())
                 .build();
     }
 

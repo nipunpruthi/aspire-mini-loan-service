@@ -1,0 +1,36 @@
+package learn.nipun.aspireminiloanservice.exception;
+
+import java.util.HashMap;
+import java.util.Map;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+
+@ControllerAdvice
+public class GlobalExceptionHandler {
+
+    @ExceptionHandler(value = ResourceAccessForbidden.class)
+    public ResponseEntity<Object> handleForbidden(Exception e) {
+
+        Map<String, Object> body = new HashMap<>();
+        body.put("message", e.getMessage());
+        return new ResponseEntity<>(body, HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(value = ResourceNotFoundException.class)
+    public ResponseEntity<Object> handleNotFound(Exception e) {
+
+        Map<String, Object> body = new HashMap<>();
+        body.put("message", e.getMessage());
+        return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(value = InvalidStatusException.class)
+    public ResponseEntity<Object> handleInvalidAction(Exception e) {
+
+        Map<String, Object> body = new HashMap<>();
+        body.put("message", e.getMessage());
+        return new ResponseEntity<>(body, HttpStatus.METHOD_NOT_ALLOWED);
+    }
+}

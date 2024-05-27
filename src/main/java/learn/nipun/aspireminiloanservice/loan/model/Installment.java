@@ -32,7 +32,7 @@ public class Installment {
     @Column(name = "pending_amount", nullable = false)
     private Double pendingAmount;
 
-    @Column(name = "received_amount", nullable = false)
+    @Column(name = "received_amount")
     private Double receivedAmount;
 
     @Column(name = "payment_status", nullable = false)

@@ -9,6 +9,8 @@ public interface InstallmentRepository extends JpaRepository<Installment, UUID> 
 
     Installment save(Installment installment);
 
+    List<Installment> findAllByLoanId(UUID loanId);
+
     Installment findTop1ByLoanIdOrderByScheduledPaymentDateDesc(UUID loanId);
 
 //    List<ScheduledPayment> findAllByCustomerIdAndLoanId(String customerId, UUID loanId);

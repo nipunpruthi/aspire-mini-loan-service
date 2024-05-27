@@ -1,13 +1,12 @@
 package learn.nipun.aspireminiloanservice.user.model;
 
 import java.time.OffsetDateTime;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
+import org.hibernate.usertype.UserType;
 
 
 @Getter
-abstract class User {
+public class User {
 
     private String userName;
     private String name;
@@ -18,9 +17,11 @@ abstract class User {
     private Integer cibilScore;
     private final OffsetDateTime createdOn;
     private OffsetDateTime updatedOn;
+    private UserType userType;
 
     public User(OffsetDateTime createdOn, String userName, String name, Address address, String phoneNumber,
-            String email, UserStatus userStatus, Integer cibilScore, OffsetDateTime updatedOn) {
+            String email,
+            UserStatus userStatus, Integer cibilScore, OffsetDateTime updatedOn, UserType userType) {
 
         this.createdOn = createdOn;
         this.userName = userName;
@@ -31,6 +32,7 @@ abstract class User {
         this.userStatus = userStatus;
         this.cibilScore = cibilScore;
         this.updatedOn = updatedOn;
+        this.userType = userType;
     }
 }
 

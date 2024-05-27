@@ -47,6 +47,18 @@ public class LoanService {
         return installmentRepository.findTop1ByLoanIdOrderByScheduledPaymentDateDesc(loanId);
     }
 
+    public List<Installment> getAllInstallments(String customerId, UUID loanId) {
+
+        loanValidator.validateLoanCustomerRelation(customerId, loanId);
+        return installmentRepository.findAllByLoanId(loanId);
+    }
+
+    public List<Installment> getAllInstallments(UUID loanId) {
+
+        loanValidator.validateLoan(loanId);
+        return installmentRepository.findAllByLoanId(loanId);
+    }
+
 
     public Loan loanApproval(LoanApprovalRequest loanApprovalRequest) {
 

@@ -4,8 +4,10 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.List;
 import java.util.UUID;
+import learn.nipun.aspireminiloanservice.loan.LoanMapper;
 import learn.nipun.aspireminiloanservice.loan.LoanService;
 import learn.nipun.aspireminiloanservice.loan.dto.LoanApplyDto;
+import learn.nipun.aspireminiloanservice.loan.dto.LoanDto;
 import learn.nipun.aspireminiloanservice.loan.dto.PayInstallmentDto;
 import learn.nipun.aspireminiloanservice.loan.entity.Loan;
 import learn.nipun.aspireminiloanservice.loan.model.Installment;
@@ -18,6 +20,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import static learn.nipun.aspireminiloanservice.loan.LoanMapper.toLoanApply;
+import static learn.nipun.aspireminiloanservice.loan.LoanMapper.toLoanDto;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,21 +32,25 @@ public class CustomerLoanController {
 
     @PreAuthorize("hasAnyAuthority('CUSTOMER')")
     @GetMapping(path = LOAN_PATH)
-    public ResponseEntity<List<Loan>> getLoans(@RequestHeader HttpHeaders headers) {
+    public ResponseEntity<List<LoanDto>> getLoans(@RequestHeader HttpHeaders headers) {
 
         String userName = getUserName(headers);
-        return new ResponseEntity<>(loanService.getLoans(userName), HttpStatus.OK);
+        List<Loan> loans = loanService.getLoans(userName);
+        List<LoanDto> loanDtos = loans.stream().map(LoanMapper::toLoanDto).toList();
+        return new ResponseEntity<>(loanDtos, HttpStatus.OK);
     }
 
 
     @PreAuthorize("hasAnyAuthority('CUSTOMER')")
     @PostMapping(path = LOAN_PATH)
-    public ResponseEntity<Loan> applyLoan(@RequestHeader HttpHeaders headers, @RequestBody LoanApplyDto loanApplyDto) {
+    public ResponseEntity<LoanDto> applyLoan(@RequestHeader HttpHeaders headers, @RequestBody LoanApplyDto loanApplyDto) {
 
         String userName = getUserName(headers);
 
         LoanApply loanApply = toLoanApply(loanApplyDto, userName);
-        return new ResponseEntity<>(loanService.submitNewLoanRequest(loanApply), HttpStatus.CREATED);
+        Loan loan = loanService.submitNewLoanRequest(loanApply);
+        LoanDto loanDto = toLoanDto(loan);
+        return new ResponseEntity<>(loanDto, HttpStatus.CREATED);
     }
 
 
@@ -54,6 +61,15 @@ public class CustomerLoanController {
 
         String userName = getUserName(headers);
         return new ResponseEntity<>(loanService.getNextInstallment(userName, loanId), HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasAnyAuthority('CUSTOMER')")
+    @GetMapping(path = LOAN_PATH + "/plans")
+    public ResponseEntity<List<Installment>> getAllInstallments(@RequestHeader HttpHeaders headers,
+            @RequestParam UUID loanId) {
+
+        String userName = getUserName(headers);
+        return new ResponseEntity<>(loanService.getAllInstallments(userName, loanId), HttpStatus.OK);
     }
 
 

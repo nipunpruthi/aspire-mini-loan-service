@@ -4,9 +4,9 @@ import jakarta.validation.ValidationException;
 import java.util.Optional;
 import java.util.UUID;
 import learn.nipun.aspireminiloanservice.exception.InvalidStatusException;
+import learn.nipun.aspireminiloanservice.exception.ResourceAccessForbidden;
 import learn.nipun.aspireminiloanservice.exception.ResourceNotFoundException;
 import learn.nipun.aspireminiloanservice.loan.entity.Loan;
-import learn.nipun.aspireminiloanservice.loan.model.Installment;
 import learn.nipun.aspireminiloanservice.loan.model.LoanStatus;
 import learn.nipun.aspireminiloanservice.loan.model.PaymentStatus;
 import learn.nipun.aspireminiloanservice.loan.repository.InstallmentRepository;
@@ -21,6 +21,14 @@ public class LoanValidator {
     private final LoanRepository loanRepository;
     private final InstallmentRepository installmentRepository;
 
+    public void validateLoan(UUID loanId) {
+
+        Optional<Loan> optionalLoan = loanRepository.findById(loanId);
+        if (optionalLoan.isEmpty()) {
+            throw new ResourceNotFoundException("Loan with id " + loanId + " not found");
+        }
+    }
+
     public void validateLoanCustomerRelation(String customerUserId, UUID loanId) {
 
         Optional<Loan> loan = loanRepository.findById(loanId);
@@ -28,7 +36,7 @@ public class LoanValidator {
             throw new ResourceNotFoundException("The loan with id " + loanId + " does not exist");
         }
         if (!loan.get().getCustomerId().equals(customerUserId)) {
-            throw new ResourceNotFoundException(
+            throw new ResourceAccessForbidden(
                     "The loan with id " + loanId + " does not belong to customer " + customerUserId);
         }
     }
@@ -40,7 +48,7 @@ public class LoanValidator {
             throw new ResourceNotFoundException("The loan with id " + loanId + " does not exist");
         }
         if (!loan.get().getStatus().equals(status)) {
-            throw new InvalidStatusException("The loan with id " + loanId + " does not belong to the status " + status);
+            throw new ResourceAccessForbidden("The loan with id " + loanId + " does not belong to the status " + status);
         }
     }
 
@@ -55,9 +63,11 @@ public class LoanValidator {
         }
     }
 
-    public void validateInstallmentStatus(PaymentStatus status, PaymentStatus finalStatus){
-        if(status.equals(finalStatus)){
-            throw new InvalidStatusException("The intallment payment status " + status + " does not match the required status " + finalStatus);
+    public void validateInstallmentStatus(PaymentStatus status, PaymentStatus finalStatus) {
+
+        if (status.equals(finalStatus)) {
+            throw new InvalidStatusException(
+                    "The intallment payment status " + status + " does not match the required status " + finalStatus);
         }
     }
 }

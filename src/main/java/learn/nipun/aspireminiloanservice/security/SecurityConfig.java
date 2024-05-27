@@ -1,4 +1,4 @@
-package learn.nipun.aspireminiloanservice.config;
+package learn.nipun.aspireminiloanservice.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,11 +21,11 @@ public class SecurityConfig {
 
         InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
         manager.createUser(
-                User.withUsername("user1").password(passwordEncoder().encode("userpass1")).authorities("CUSTOMER").build());
+                User.withUsername("user1").password(passwordEncoder().encode("userpass")).authorities("CUSTOMER").build());
         manager.createUser(
-                User.withUsername("user2").password(passwordEncoder().encode("userpass2")).authorities("CUSTOMER").build());
+                User.withUsername("user2").password(passwordEncoder().encode("userpass")).authorities("CUSTOMER").build());
         manager.createUser(
-                User.withUsername("admin1").password(passwordEncoder().encode("adminpass1")).authorities("ADMIN").build());
+                User.withUsername("admin1").password(passwordEncoder().encode("adminpass")).authorities("ADMIN").build());
         return manager;
     }
 

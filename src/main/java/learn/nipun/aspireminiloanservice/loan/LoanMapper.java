@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 import learn.nipun.aspireminiloanservice.loan.dto.LoanApplyDto;
 import learn.nipun.aspireminiloanservice.loan.dto.LoanApprovalRequestDto;
+import learn.nipun.aspireminiloanservice.loan.entity.Loan;
 import learn.nipun.aspireminiloanservice.loan.model.*;
 import lombok.experimental.UtilityClass;
 
@@ -34,21 +35,22 @@ public class LoanMapper {
                 .build();
     }
 
-    public static ScheduledPayment toScheduledPayment(Loan loan, LocalDate dueDate, Double amount, int termNo) {
+    public static Installment toScheduledPayment(Loan loan, LocalDate dueDate, Double amount, int termNo) {
 
-        return ScheduledPayment.builder()
+        return Installment.builder()
                 .id(UUID.randomUUID())
                 .loanId(loan.getId())
                 .termNo(termNo)
                 .scheduledPaymentDate(dueDate)
                 .actualPaymentDate(null)
-                .dueAmount(amount)
+                .pendingAmount(amount)
                 .receivedAmount(amount)
                 .status(PaymentStatus.PENDING)
                 .build();
     }
 
-    public static LoanApprovalRequest toLoanApprovalRequest(LoanApprovalRequestDto requestDto, String adminId){
+    public static LoanApprovalRequest toLoanApprovalRequest(LoanApprovalRequestDto requestDto, String adminId) {
+
         return LoanApprovalRequest.builder()
                 .adminId(adminId)
                 .loanId(requestDto.getLoanId())

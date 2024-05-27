@@ -1,9 +1,8 @@
 package learn.nipun.aspireminiloanservice.loan.model;
 
 public enum LoanStatus {
-    PENDING,
+    PENDING, // PENDING APPROVAL
     APPROVED,
-    DECLINED,
-    UN_PAID,
+    REJECTED,
     PAID,
 }

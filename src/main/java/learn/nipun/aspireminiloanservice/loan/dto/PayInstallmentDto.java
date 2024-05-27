@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class PayScheduledPaymentDto {
+public class PayInstallmentDto {
     private UUID loanId;
     private Double amount;
 }

@@ -1,11 +1,15 @@
-package learn.nipun.aspireminiloanservice.loan;
+package learn.nipun.aspireminiloanservice.loan.controller;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.List;
 import java.util.UUID;
+import learn.nipun.aspireminiloanservice.loan.LoanService;
 import learn.nipun.aspireminiloanservice.loan.dto.LoanApplyDto;
-import learn.nipun.aspireminiloanservice.loan.model.*;
+import learn.nipun.aspireminiloanservice.loan.dto.PayInstallmentDto;
+import learn.nipun.aspireminiloanservice.loan.entity.Loan;
+import learn.nipun.aspireminiloanservice.loan.model.Installment;
+import learn.nipun.aspireminiloanservice.loan.model.LoanApply;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -25,19 +29,12 @@ public class CustomerLoanController {
 
     @PreAuthorize("hasAnyAuthority('CUSTOMER')")
     @GetMapping(path = LOAN_PATH)
-    public ResponseEntity<List<Loan>> getLoans(@RequestHeader HttpHeaders headers,
-            @RequestParam(required = false) LoanStatus status) {
+    public ResponseEntity<List<Loan>> getLoans(@RequestHeader HttpHeaders headers) {
 
         String userName = getUserName(headers);
-
-        LoanFilter loanFilter = LoanFilter.builder()
-                .status(status)
-                .userName(userName)
-                .loanId(null)
-                .build();
-
-        return new ResponseEntity<>(loanService.getAllLoans(loanFilter), HttpStatus.OK);
+        return new ResponseEntity<>(loanService.getLoans(userName), HttpStatus.OK);
     }
+
 
     @PreAuthorize("hasAnyAuthority('CUSTOMER')")
     @PostMapping(path = LOAN_PATH)
@@ -49,23 +46,27 @@ public class CustomerLoanController {
         return new ResponseEntity<>(loanService.submitNewLoanRequest(loanApply), HttpStatus.CREATED);
     }
 
+
     @PreAuthorize("hasAnyAuthority('CUSTOMER')")
     @GetMapping(path = LOAN_PATH + "/plan")
-    public ResponseEntity<List<ScheduledPayment>> getScheduledPayment(@RequestHeader HttpHeaders headers,
+    public ResponseEntity<Installment> getNextInstallment(@RequestHeader HttpHeaders headers,
             @RequestParam UUID loanId) {
 
         String userName = getUserName(headers);
-        LoanFilter loanFilter = LoanFilter.builder()
-                .status(null)
-                .userName(userName)
-                .loanId(loanId)
-                .build();
-
-        return new ResponseEntity<>(loanService.getScheduledPayments(loanFilter), HttpStatus.OK);
+        return new ResponseEntity<>(loanService.getNextInstallment(userName, loanId), HttpStatus.OK);
     }
 
-//    @PatchMapping(path = LOAN_PATH + "/plan")
-//    public ResponseEntity<ScheduledPayment> payScheduledPayment(UUID loanId,)
+
+    @PreAuthorize("hasAnyAuthority('CUSTOMER')")
+    @PatchMapping(path = LOAN_PATH + "/plan")
+    public ResponseEntity<Installment> payInstallment(@RequestHeader HttpHeaders headers,
+            @RequestBody PayInstallmentDto payInstallmentDto) {
+
+        String userName = getUserName(headers);
+
+        return new ResponseEntity<>(loanService.payInstallment(userName, payInstallmentDto), HttpStatus.OK);
+    }
+
 
     private static String getUserName(HttpHeaders headers) {
 

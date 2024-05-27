@@ -1,10 +1,11 @@
-package learn.nipun.aspireminiloanservice.loan;
+package learn.nipun.aspireminiloanservice.loan.controller;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.List;
+import learn.nipun.aspireminiloanservice.loan.LoanService;
 import learn.nipun.aspireminiloanservice.loan.dto.LoanApprovalRequestDto;
-import learn.nipun.aspireminiloanservice.loan.model.Loan;
+import learn.nipun.aspireminiloanservice.loan.entity.Loan;
 import learn.nipun.aspireminiloanservice.loan.model.LoanApprovalRequest;
 import learn.nipun.aspireminiloanservice.loan.model.LoanFilter;
 import learn.nipun.aspireminiloanservice.loan.model.LoanStatus;

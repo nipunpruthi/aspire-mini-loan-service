@@ -40,7 +40,9 @@ Import file `Aspire-mini-loan-service.postman_collection.json` into Postman
 ## Commands
 
 build : `./gradlew clean build`
+
 test : `./gradlew clean test`
+
 run : `./gradlew clean run`
 
 

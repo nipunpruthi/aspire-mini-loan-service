@@ -129,12 +129,11 @@ class AdminLoanControllerApiTest {
     }
 
     @Test
-    void getLoans_return2xxWhenLoanStatusIsNotPending() throws Exception {
+    void getLoans_returnNoTAcceptableWhenLoanStatusIsNotPending() throws Exception {
         //Given
         Loan loan = aLoan().toBuilder().status(LoanStatus.REJECTED).build();
 
         when(loanRepository.findById(loan.getId())).thenReturn(Optional.of(loan));
-//        when(loanRepository.save(any())).thenReturn(approvedLoan);
 
         LoanApprovalRequestDto loanApprovalRequestDto = LoanApprovalRequestDto.builder()
                 .loanId(loan.getId())
@@ -142,7 +141,6 @@ class AdminLoanControllerApiTest {
                 .build();
 
         String jsonRequestDto = objectMapper.writeValueAsString(loanApprovalRequestDto);
-//        when(loanService.getAllLoans()).thenReturn(List.of(loan));
         var request = patch(LOAN_PATH)
                 .header(AUTHORIZATION, getBasicAuthenticationHeader("admin1", "adminpass"))
                 .content(jsonRequestDto)
@@ -155,7 +153,7 @@ class AdminLoanControllerApiTest {
     }
 
     @Test
-    void getInstallments_return2xxWhenLoanIdDoesNotExist() throws Exception {
+    void getInstallments_returnNotFoundWhenLoanIdDoesNotExist() throws Exception {
 
         UUID randomLoanId = UUID.randomUUID();
 

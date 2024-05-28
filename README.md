@@ -87,7 +87,7 @@ Command to run all the tests(20+ tests) : `./gradlew clean test`
 ### Service Unit Test Coverage
 * LoanServiceUTest.java
 
-### Integration Test
+### Integration Test Coverage
 * InstallmentRepositoryITest.java
 * LoanRepositoryITest.java
 

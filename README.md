@@ -82,6 +82,7 @@ Command to run all the tests(20+ tests) : `./gradlew clean test`
 
 ## Database
 type : `h2` in-memory embedded database
+
 Note : First I used `postgres`, but to make the application run simpler, migrated to `h2` embedded db
 
 ### Schemas

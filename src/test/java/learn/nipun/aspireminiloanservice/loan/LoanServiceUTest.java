@@ -38,11 +38,6 @@ class LoanServiceUTest {
     @Autowired
     private LoanService loanService;
 
-//    @BeforeEach
-//    public void setup() {
-//        MockitoAnnotations.initMocks(this);
-//    }
-
     @Test
     void getInstallment_throwsException_whenGetNextInstallmentCustomerIdAndLoanIdAreNotRelated() {
         //Give

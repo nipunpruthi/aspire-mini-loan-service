@@ -13,7 +13,8 @@ Import file `Aspire-mini-loan-service.postman_collection.json` into Postman
 ### Functional Requirements
 1. Allow customer to request for new Loan 
 2. Allow admin to view and approve/decline Loan 
-3. Submit weekly loan repayments 
+3. Allow customer to Submit weekly loan repayments 
+4. Allow customer to view upcoming loan repayment(installment)
 4. Generate repayments and PENDING state
 5. Policy to make sure customer can view his own loan only
 6. Policy to verify amount is greater than or equal to scheudled payment
@@ -22,10 +23,11 @@ Import file `Aspire-mini-loan-service.postman_collection.json` into Postman
 ### Additional Features
 1. Appropriate exception and error code with message for wrong or not allowed requests
 2. Authentication before login
+3. Admin can see all users loan
 
 
 ### Auth Details
-3. The user authentication details are saven in-mem in `SecurityConfig.java` for prototyping
+The user authentication details are saved in-memory in `SecurityConfig.java` for prototyping
 
 ## Commands
 

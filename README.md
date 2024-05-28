@@ -22,7 +22,7 @@ Only works with *JAVA 17*
 4. Generate repayments with PENDING state
 5. Policy to make sure customer can view his own loan only
 6. Policy to verify amount is greater than or equal to scheudled payment
-7. Loan become paid is whole amount is paid
+7. Loan statuc become PAID when all amount is paid back
 
 ### Additional Features
 1. Appropriate exception and error code with message for wrong or not allowed requests

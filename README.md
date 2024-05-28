@@ -25,6 +25,8 @@ Import file `Aspire-mini-loan-service.postman_collection.json` into Postman
 2. Authentication before login
 3. Admin can see all users loan
 
+
+
 ### Assumption
 * The new repayment will be generated only when last repayment is paid
 * This is, to dynamically allow customer to pay any amount greater than installment.
@@ -57,6 +59,10 @@ run : `./gradlew clean run`
 | `/api/v1/admin/loan/plans` | get   | get all past and upcoming installment of a loan | ADMIN     |
 | `/api/v1/admin/loan`       | patch | Pay EMI                                         | ADMIN     |
 
+## Error Codes
+* HttpStatus.FORBIDDEN : 403 -> when customer1 request for loan data of customer 2
+* HttpStatus.NOT_FOUND : 404 -> when loanId doesn't exist
+* HttpStatus.NOT_ACCEPTABLE : 406 -> when loan status is not appropriate
 
 ## Test Coverage
 Command to run all the tests(20+ tests) : `./gradlew clean test`

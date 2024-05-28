@@ -7,7 +7,10 @@ import java.util.UUID;
 import learn.nipun.aspireminiloanservice.loan.dto.PayInstallmentDto;
 import learn.nipun.aspireminiloanservice.loan.entity.Installment;
 import learn.nipun.aspireminiloanservice.loan.entity.Loan;
-import learn.nipun.aspireminiloanservice.loan.model.*;
+import learn.nipun.aspireminiloanservice.loan.model.LoanApply;
+import learn.nipun.aspireminiloanservice.loan.model.LoanApprovalRequest;
+import learn.nipun.aspireminiloanservice.loan.model.LoanStatus;
+import learn.nipun.aspireminiloanservice.loan.model.PaymentStatus;
 import learn.nipun.aspireminiloanservice.loan.repository.InstallmentRepository;
 import learn.nipun.aspireminiloanservice.loan.repository.LoanRepository;
 import lombok.RequiredArgsConstructor;
@@ -99,29 +102,13 @@ public class LoanService {
                 .receivedAmount(payInstallmentDto.getAmount())
                 .build();
         installmentRepository.save(installment);
-        int loanTermPending = loan.getPendingTerms();
-        double pendingAmount = loan.getPendingAmount() - payInstallmentDto.getAmount();
 
-        LoanStatus status = loan.getStatus();
-        if (pendingAmount <= 0) {
-            status = LoanStatus.PAID;
-        }
-
-        loan = loan.toBuilder()
-                .pendingTerms(loanTermPending - 1)
-                .status(status)
-                .pendingAmount(pendingAmount)
-                .build();
+        loan = updateLoanAfterPayment(loan, payInstallmentDto.getAmount());
         loanRepository.save(loan);
-
-        if (status.equals(LoanStatus.PAID)) {
+        if (loan.getStatus().equals(LoanStatus.PAID)) {
             return installment;
         }
-
-//        Double nextAmount = Math.min(pendingAmount, loan.getInstallmentAmount());
-
         Installment nextInstallment = createNextScheduledPayment(loan, installment.getScheduledPaymentDate());
-
         installmentRepository.save(nextInstallment);
         return installment;
     }
@@ -138,6 +125,23 @@ public class LoanService {
                 .receivedAmount(null)
                 .actualPaymentDate(null)
                 .status(PaymentStatus.PENDING)
+                .build();
+    }
+
+    private Loan updateLoanAfterPayment(Loan loan, double amountPaid) {
+
+        int loanTermPending = loan.getPendingTerms();
+        double pendingAmount = loan.getPendingAmount() - amountPaid;
+
+        LoanStatus status = loan.getStatus();
+        if (pendingAmount <= 0) {
+            status = LoanStatus.PAID;
+        }
+
+        return loan.toBuilder()
+                .pendingTerms(loanTermPending - 1)
+                .status(status)
+                .pendingAmount(pendingAmount)
                 .build();
     }
 }

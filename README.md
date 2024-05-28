@@ -32,7 +32,8 @@ Import file `Aspire-mini-loan-service.postman_collection.json` into Postman
 
 
 ### Auth Details
-The user authentication details are saved in-memory in `SecurityConfig.java` for prototyping
+* The user authentication details are saved in-memory in `SecurityConfig.java` for prototyping
+* To switch to different user, simply update the `Basic Auth` details from `user1` to `user2` in postman
 
 ## Commands
 
@@ -42,6 +43,7 @@ run : `./gradlew clean run`
 
 
 ## APIs
+* To switch to different user, simply update the `Basic Auth` details from `user1` to `user2` in postman
 
 | API                        | Type  | Description                                     | Auth User |
 |----------------------------|-------|-------------------------------------------------|-----------|

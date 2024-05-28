@@ -25,6 +25,11 @@ Import file `Aspire-mini-loan-service.postman_collection.json` into Postman
 2. Authentication before login
 3. Admin can see all users loan
 
+### Assumption
+* The new repayment will be generated only when last repayment is paid
+* This is, to dynamically allow customer to pay any amount greater than installment.
+* Using this, customer can close the loan in one go also
+
 
 ### Auth Details
 The user authentication details are saved in-memory in `SecurityConfig.java` for prototyping

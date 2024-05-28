@@ -28,6 +28,8 @@ Only works with *JAVA 17*
 1. Appropriate exception and error code with message for wrong or not allowed requests
 2. Authentication before login
 3. Admin can see all users loan
+4. Every rest api has Triple authentication
+5. First it authenticates the user, then it checks if user belongs to the appropriate group, third, if user has the access
 
 
 
@@ -40,6 +42,11 @@ Only works with *JAVA 17*
 ### Auth Details
 * The user authentication details are saved in-memory in `SecurityConfig.java` for prototyping
 * To switch to different user, simply update the `Basic Auth` details from `user1` to `user2` in postman
+
+### Auth Details(username, password, authority)
+* user1 : userpass : CUSTOMER
+* user2 : userpass : CUSTOMER
+* admin1 : adminpass : ADMIN
 
 ## Commands
 

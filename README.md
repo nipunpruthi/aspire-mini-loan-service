@@ -19,7 +19,7 @@ Only works with *JAVA 17*
 2. Allow admin to view and approve/decline Loan 
 3. Allow customer to Submit weekly loan repayments 
 4. Allow customer to view upcoming loan repayment(installment)
-4. Generate repayments and PENDING state
+4. Generate repayments with PENDING state
 5. Policy to make sure customer can view his own loan only
 6. Policy to verify amount is greater than or equal to scheudled payment
 7. Loan become paid is whole amount is paid

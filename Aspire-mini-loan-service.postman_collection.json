@@ -1,0 +1,357 @@
+{
+	"info": {
+		"_postman_id": "dca763b2-898e-4be7-aa77-3d48708b7f9c",
+		"name": "Aspire-mini-loan-service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17059010"
+	},
+	"item": [
+		{
+			"name": "customer",
+			"item": [
+				{
+					"name": "getLoans -user1",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "user1",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "userpass",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/loan",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"loan"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Apply New Loan -user1",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "userpass",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "user1",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"amount\" : 101.0,\n    \"loan_term\" : 5\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/loan",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"loan"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getNextInstallment -user1",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "user1",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "userpass",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/loan/plan?loanId=af5bb561-3316-4ff0-94fd-50492c82b4cb",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"loan",
+								"plan"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "PENDING",
+									"disabled": true
+								},
+								{
+									"key": "loanId",
+									"value": "af5bb561-3316-4ff0-94fd-50492c82b4cb"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "pay installment -user1",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "user1",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "userpass",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"loanId\" : \"af5bb561-3316-4ff0-94fd-50492c82b4cb\",\n    \"amount\" : 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/loan/plan",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"loan",
+								"plan"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all installments -user1",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "user1",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "userpass",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/loan/plans?loanId=af5bb561-3316-4ff0-94fd-50492c82b4cb",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"loan",
+								"plans"
+							],
+							"query": [
+								{
+									"key": "loanId",
+									"value": "af5bb561-3316-4ff0-94fd-50492c82b4cb"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "admin",
+			"item": [
+				{
+					"name": "approveLoan -admin",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "adminpass",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin1",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"loanId\" : \"af5bb561-3316-4ff0-94fd-50492c82b4cb\",\n    \"decision\" : \"APPROVED\" // APPROVED, REJECTED\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/admin/loan",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"admin",
+								"loan"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "view All Loans -admin",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "adminpass",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin1",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/admin/loan",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"admin",
+								"loan"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "view all installments -admin",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "adminpass",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin1",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/admin/loan/plans?loanId=65025c86-ff65-4bb5-856d-ae370549b801",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"admin",
+								"loan",
+								"plans"
+							],
+							"query": [
+								{
+									"key": "loanId",
+									"value": "65025c86-ff65-4bb5-856d-ae370549b801"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

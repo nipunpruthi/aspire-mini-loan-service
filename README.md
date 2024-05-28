@@ -6,7 +6,11 @@ This service is used to manage loan application from customers and collect emi f
 ## Postman Collection
 Import file `Aspire-mini-loan-service.postman_collection.json` into Postman
 
-## Best Experience : Use Intellij Idea Ultimate with Java 17
+## Best Experience : 
+
+Use Intellij Idea Ultimate
+
+Only works with *JAVA 17*
 
 ## Requirements 
 

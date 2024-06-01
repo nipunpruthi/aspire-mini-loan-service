@@ -130,5 +130,11 @@ installment
 | `term_no`                | int2    | Status of Loan       | 
 
 
-
+### Salient Features
+1. Postman Collection
+2. Test Cases -> Service Unit Test, Controller API test, Repository Integration Test
+3. Error Codes With Proper Message -> Appropriate mapping of exception to error codes
+4. All in one application with DB integration
+5. Docker support
+6. Authentication, Authorisation(grp based) and access policy
 
